@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey/models/task_data.dart';
 
-class AddTaskScreen extends StatelessWidget {
-  const AddTaskScreen({super.key});
+class AddTaskScreen extends StatefulWidget {
+  @override
+  State<AddTaskScreen> createState() => _AddTaskScreenState();
+}
+
+class _AddTaskScreenState extends State<AddTaskScreen> {
+  final TextEditingController _controller =
+      TextEditingController(); // Controller for TextField
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -26,6 +33,9 @@ class AddTaskScreen extends StatelessWidget {
               ),
             ),
             TextField(
+              onChanged: (newText){
+                _controller.text = newText;
+              },
               textAlign: TextAlign.center,
               autofocus: true,
               cursorColor: Colors.lightBlueAccent, // Set cursor color
@@ -60,13 +70,23 @@ class AddTaskScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             TextButton(
-            style: TextButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 16,horizontal: 130),
-              backgroundColor: Colors.lightBlueAccent,
-              shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero)
-            ),
-              onPressed: () {},
-              child: const Text("Add",style: TextStyle(color: Colors.white,fontSize: 18),),
+              style: TextButton.styleFrom(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 16, horizontal: 130),
+                backgroundColor: Colors.lightBlueAccent,
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.zero),
+              ),
+              onPressed: () {
+                if (_controller.text.isNotEmpty) {
+                  Provider.of<TaskData>(context,listen: false).addTask(_controller.text);
+                  Navigator.pop(context); // Close the screen
+                }
+              },
+              child: const Text(
+                "Add",
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              ),
             ),
           ],
         ),
