@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey/models/task_data.dart';
 
-class AddTaskScreen extends StatefulWidget {
-  @override
-  State<AddTaskScreen> createState() => _AddTaskScreenState();
-}
-
-class _AddTaskScreenState extends State<AddTaskScreen> {
+class AddTaskScreen extends StatelessWidget {
+  
   final TextEditingController _controller =
-      TextEditingController(); // Controller for TextField
+      TextEditingController();
+
+  AddTaskScreen({super.key}); // Controller for TextField
 
   @override
   Widget build(BuildContext context) {
